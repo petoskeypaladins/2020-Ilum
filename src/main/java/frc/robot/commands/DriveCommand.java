@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 /**
@@ -18,7 +19,10 @@ public class DriveCommand extends Command {
   public DriveCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
-    Robot.driveSubsystem.left.setInverted(true);
+   // Robot.driveSubsystem.left.setInverted(true);
+ // Robot.driveSubsystem.leftEncoder.setInverted(true);
+  Robot.driveSubsystem.leftEncoder.setPosition(0);
+  Robot.driveSubsystem.rightEncoder.setPosition(0);
   }
 
   // Called just before this Command runs the first time
@@ -31,6 +35,8 @@ public class DriveCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveSubsystem.drive.arcadeDrive(Robot.m_oi.xbox.getY(Hand.kLeft)*0.5, -Robot.m_oi.xbox.getX(Hand.kRight)*.5);
+    
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

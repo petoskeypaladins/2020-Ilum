@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDriveCommand;
-import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -52,6 +51,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Left Encoder Position", -Robot.driveSubsystem.leftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Encoder Position", Robot.driveSubsystem.rightEncoder.getPosition());
+    if(Robot.m_oi.xbox.getStartButtonPressed()) {
+      Robot.driveSubsystem.leftEncoder.setPosition(0);
+      Robot.driveSubsystem.rightEncoder.setPosition(0);
+    }
+    SmartDashboard.putNumber("LeftRatio", Robot.driveSubsystem.leftEncoder.getPositionConversionFactor());
   }
 
   /**

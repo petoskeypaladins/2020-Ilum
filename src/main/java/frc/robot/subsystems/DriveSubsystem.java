@@ -7,12 +7,14 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveCommand;
 
@@ -24,17 +26,20 @@ public class DriveSubsystem extends Subsystem {
   // here. Call these from Commands.
   CANSparkMax leftMotor1 = new CANSparkMax(RobotMap.LEFT_MOTOR_1, CANSparkMaxLowLevel.MotorType.kBrushless);
   CANSparkMax leftMotor2 = new CANSparkMax(RobotMap.LEFT_MOTOR_2, CANSparkMaxLowLevel.MotorType.kBrushless);
+  public CANEncoder leftEncoder = leftMotor2.getEncoder();
   CANSparkMax rightMotor1 = new CANSparkMax(RobotMap.RIGHT_MOTOR_1, CANSparkMaxLowLevel.MotorType.kBrushless);
   CANSparkMax rightMotor2 = new CANSparkMax(RobotMap.RIGHT_MOTOR_2, CANSparkMaxLowLevel.MotorType.kBrushless);
+  public CANEncoder rightEncoder = new CANEncoder(rightMotor2);
   public SpeedControllerGroup left = new SpeedControllerGroup(leftMotor1, leftMotor2);
   SpeedControllerGroup right = new SpeedControllerGroup(rightMotor1, rightMotor2);  
   public DifferentialDrive drive = new DifferentialDrive(left, right);
   
   @Override
   protected void initDefaultCommand() {
-
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    // Set the default command for a susystem here.
+    // setDefaultCommand(new MySpecialCmmand());
     setDefaultCommand(new DriveCommand());
-  }
+    leftEncoder.setPositionConversionFactor(1.8);
+    rightEncoder.setPositionConversionFactor(1.8);
+   }
 }

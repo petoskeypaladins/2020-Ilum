@@ -22,8 +22,15 @@ public class RobotMap {
   public static final int LEFT_MOTOR_2 = 15;
   public static final int RIGHT_MOTOR_1 = 1;
   public static final int RIGHT_MOTOR_2 = 2;
-  // If you are using multiple modules, make sure to define both the port
+
+  public static final int SHOOTER_FEEDER_MOTOR = 0;
+    // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
+
+  public static final int NEO_PULSE = 64;
+  public static final double GEARBOX_RATIO = 10.71;
+  public static final double WHEEL_DIAMETER = 6.0;
+  public static final double PULSE_PER_INCH = GEARBOX_RATIO * NEO_PULSE / (WHEEL_DIAMETER* Math.PI);
 }
