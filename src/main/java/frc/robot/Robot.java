@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterFeederSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,7 +26,8 @@ import frc.robot.subsystems.IntakeSubsystem;
  */
 public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static ShooterFeederSubsystem shooterFeederSubsystem = new ShooterFeederSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -60,6 +62,7 @@ public class Robot extends TimedRobot {
       Robot.driveSubsystem.rightEncoder.setPosition(0);
     }
     SmartDashboard.putNumber("LeftRatio", Robot.driveSubsystem.leftEncoder.getPositionConversionFactor());
+    SmartDashboard.putBoolean("Limit Switch Value", Robot.shooterFeederSubsystem.proxSensor.get());
   }
 
   /**
