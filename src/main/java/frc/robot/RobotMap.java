@@ -27,12 +27,13 @@ public class RobotMap {
   public static final int SHOOTER_LAUNCH_WHEEL_1 = 60;
   public static final int SHOOTER_LAUNCH_WHEEL_2 = 1;
   
-  public static final int INTAKE_WHEEL_MOTOR = 60;
-  public static final int INTAKE_BELT_MOTOR = 1;
+  public static final int INTAKE_WHEEL_MOTOR = 63;
+  public static final int INTAKE_BELT_MOTOR = 62;
   
   public static final int SHOOTER_LAUNCH_BUTTON = 1;
   public static final int INTAKE_BELT_FORWARD_BUTTON = 3;
   public static final int INTAKE_BELT_BACKWARD_BUTTON = 4;
+  public static final int LAUNCHER_START = 2;
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;

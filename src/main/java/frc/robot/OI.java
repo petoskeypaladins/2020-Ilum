@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.LauncherSpeedCommand;
 import frc.robot.commands.ShooterLaunchCommand;
 
 /**
@@ -21,9 +22,11 @@ public class OI {
   public XboxController xbox = new XboxController(0);
   public Joystick flightStick = new Joystick(1);  
   public Button shooterButton = new JoystickButton(flightStick, RobotMap.SHOOTER_LAUNCH_BUTTON);
-  
+  public Button launcherButton = new JoystickButton(flightStick, RobotMap.LAUNCHER_START);
+
   public OI() {
     shooterButton.whenPressed(new ShooterLaunchCommand());
+    launcherButton.whenPressed(new LauncherSpeedCommand());
   }  
 
 }
