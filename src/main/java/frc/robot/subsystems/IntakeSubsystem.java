@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleOpIntakeCommand;
@@ -21,6 +23,8 @@ public class IntakeSubsystem extends Subsystem {
   // here. Call these from Commands.
   public TalonSRX belt = new TalonSRX(RobotMap.INTAKE_BELT_MOTOR);
   public TalonSRX wheels = new TalonSRX(RobotMap.INTAKE_WHEEL_MOTOR);
+  // public Compressor compressor = new Compressor();
+  // public DoubleSolenoid intakeArm = new DoubleSolenoid(2,3);
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

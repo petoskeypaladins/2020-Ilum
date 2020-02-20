@@ -33,7 +33,6 @@ public class DriveSubsystem extends Subsystem {
   public SpeedControllerGroup left = new SpeedControllerGroup(leftMotor1, leftMotor2);
   SpeedControllerGroup right = new SpeedControllerGroup(rightMotor1, rightMotor2);  
   public DifferentialDrive drive = new DifferentialDrive(left, right);
-  public TalonFX tempMotor = new TalonFX(27);
   
   @Override
   protected void initDefaultCommand() {

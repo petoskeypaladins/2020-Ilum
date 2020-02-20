@@ -31,18 +31,13 @@ public class DriveCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.tempMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(Robot.m_oi.xbox.getY(Hand.kLeft)*0.5, -Robot.m_oi.xbox.getX(Hand.kRight)*.5);
-    Robot.driveSubsystem.tempMotor.set(TalonFXControlMode.PercentOutput, 1);
-    SmartDashboard.putNumber("temp", Robot.driveSubsystem.tempMotor.getSensorCollection().getIntegratedSensorVelocity());
-    SmartDashboard.putNumber("temp2", Robot.driveSubsystem.tempMotor.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("temp3", Robot.driveSubsystem.tempMotor.getSelectedSensorPosition());
-    
+    Robot.driveSubsystem.drive.arcadeDrive(-Robot.m_oi.xbox.getY(Hand.kLeft)*.8, Robot.m_oi.xbox.getX(Hand.kRight)*.8);
+       
   }
 
   // Make this return true when this Command no longer needs to run execute()

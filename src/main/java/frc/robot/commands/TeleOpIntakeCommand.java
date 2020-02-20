@@ -8,8 +8,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -34,16 +36,19 @@ public class TeleOpIntakeCommand extends Command {
   @Override
   protected void execute() {
     
-    if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0 && Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
-    else {
-      if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft));
-      else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, Robot.m_oi.xbox.getTriggerAxis(Hand.kRight));
-      else Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
-    }
+    if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0.1 && Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
+    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft));
+    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, -Robot.m_oi.xbox.getTriggerAxis(Hand.kRight));
+    else Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
+    SmartDashboard.putNumber("Left Trigger", Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft));
+    SmartDashboard.putNumber("Right Trigger", Robot.m_oi.xbox.getTriggerAxis(Hand.kRight));
     if(Robot.m_oi.flightStick.getRawButton(RobotMap.INTAKE_BELT_FORWARD_BUTTON) && Robot.m_oi.flightStick.getRawButton(RobotMap.INTAKE_BELT_BACKWARD_BUTTON)) Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput,0);
     else if(Robot.m_oi.flightStick.getRawButton(RobotMap.INTAKE_BELT_FORWARD_BUTTON)) Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput, speed);
     else if(Robot.m_oi.flightStick.getRawButton(RobotMap.INTAKE_BELT_BACKWARD_BUTTON)) Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput, -speed);
     else Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput,0);
+
+    // if(Robot.m_oi.xbox.getBumperPressed(Hand.kLeft)) Robot.intakeSubsystem.intakeArm.set(Value.kForward);
+    // else if(Robot.m_oi.xbox.getBumperPressed(Hand.kRight)) Robot.intakeSubsystem.intakeArm.set(Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
