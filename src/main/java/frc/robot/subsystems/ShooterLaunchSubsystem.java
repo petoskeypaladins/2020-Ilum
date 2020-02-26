@@ -24,7 +24,7 @@ public class ShooterLaunchSubsystem extends Subsystem {
   // here. Call these from Commands.
   public void spinCommand(double speed) {
     launcher1.set(ControlMode.PercentOutput, -speed);
-    launcher2.set(ControlMode.PercentOutput, speed);
+    launcher2.set(ControlMode.PercentOutput, -speed);
   }
 
   public int getLaunchSpeed() {

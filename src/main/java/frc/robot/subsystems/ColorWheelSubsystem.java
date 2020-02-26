@@ -9,26 +9,22 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
-import frc.robot.commands.TeleOpIntakeCommand;
+import frc.robot.commands.WheelCommand;
 
 /**
  * Add your docs here.
  */
-public class IntakeSubsystem extends Subsystem {
+public class ColorWheelSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public TalonSRX belt = new TalonSRX(RobotMap.INTAKE_BELT_MOTOR);
-  public TalonSRX wheels = new TalonSRX(RobotMap.INTAKE_WHEEL_MOTOR);
-  public Compressor compressor = new Compressor();
-  public DoubleSolenoid intakeArm = new DoubleSolenoid(0,1);
+  public TalonSRX colorMotor = new TalonSRX(9); //TODO: Add to RobotMap
+  public DoubleSolenoid colorArm = new DoubleSolenoid(2,3); //TODO: Confirm numbers and add to RobotMap
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new TeleOpIntakeCommand());
+    setDefaultCommand(new WheelCommand());
   }
 }

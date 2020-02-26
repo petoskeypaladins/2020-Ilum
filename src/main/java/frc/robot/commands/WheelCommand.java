@@ -7,51 +7,48 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class AutoDriveCommand extends Command {
-  Timer timer = new Timer();
-
-  public AutoDriveCommand() {
+public class WheelCommand extends Command {
+  public WheelCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
+    requires(Robot.wheelSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.leftEncoder.setPosition(0);
-    Robot.driveSubsystem.rightEncoder.setPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(0.3, 0);
+    if(Robot.m_oi.flightStick.getPOV() == 90) Robot.wheelSubsystem.colorMotor.set(ControlMode.PercentOutput, 1);
+    else if(Robot.m_oi.flightStick.getPOV() == 270) Robot.wheelSubsystem.colorMotor.set(ControlMode.PercentOutput, -1);
+    else Robot.wheelSubsystem.colorMotor.set(ControlMode.PercentOutput,0);
+    if(Robot.m_oi.xbox.getXButtonPressed()) Robot.wheelSubsystem.colorArm.set(Value.kForward);
+    else if(Robot.m_oi.xbox.getBButtonPressed()) Robot.wheelSubsystem.colorArm.set(Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    // if(timer.get() > 1) return true;
-    // else return false;
-    return (-Robot.driveSubsystem.leftEncoder.getPosition() < -16);
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveSubsystem.drive.arcadeDrive(0, 0);
-
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

@@ -7,44 +7,43 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class AutoDriveCommand extends Command {
-  Timer timer = new Timer();
-
-  public AutoDriveCommand() {
+public class AutoFireCommand extends Command {
+  public AutoFireCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
+    requires(Robot.shooterFeederSubsystem);
+    requires(Robot.intakeSubsystem);
+    requires(Robot.shooterLaunchSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.leftEncoder.setPosition(0);
-    Robot.driveSubsystem.rightEncoder.setPosition(0);
+    Robot.shooterFeederSubsystem.feederSpin(0.35);
+    Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput, 0.7);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(0.3, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    // if(timer.get() > 1) return true;
-    // else return false;
-    return (-Robot.driveSubsystem.leftEncoder.getPosition() < -16);
+    return timeSinceInitialized() > 2.5;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveSubsystem.drive.arcadeDrive(0, 0);
+    Robot.shooterFeederSubsystem.feederSpin(0);
+    Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput, 0);
+    Robot.shooterLaunchSubsystem.spinCommand(0);
 
   }
 
@@ -52,6 +51,6 @@ public class AutoDriveCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+  end();
   }
 }

@@ -7,12 +7,16 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDriveCommand;
+import frc.robot.commands.AutoGroup;
+import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterFeederSubsystem;
@@ -30,21 +34,38 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ShooterFeederSubsystem shooterFeederSubsystem = new ShooterFeederSubsystem();
   public static ShooterLaunchSubsystem shooterLaunchSubsystem = new ShooterLaunchSubsystem();
+  public static ColorWheelSubsystem wheelSubsystem = new ColorWheelSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
+  SendableChooser<Double> shooterSpeedChooser = new SendableChooser<>();
+  public static double shooterSpeed;
   /**
-   * This function is run when the robot is first started up and should be
+   * Th2is function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
     m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new AutoDriveCommand());
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(640, 480);
+    m_chooser.setDefaultOption("Default Auto", new AutoGroup());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    
+    shooterSpeedChooser.addOption("Full", 1.);
+    shooterSpeedChooser.setDefaultOption("95 percent", 0.95);
+    shooterSpeedChooser.addOption("90 percent", 0.90);
+    shooterSpeedChooser.addOption("85 percent", 0.85);
+    shooterSpeedChooser.addOption("80 percent", 0.80);
+    shooterSpeedChooser.addOption("75 percent", 0.75);
+    shooterSpeedChooser.addOption("70 percent", 0.70);
+    shooterSpeedChooser.addOption("65 percent", 0.65);
+    shooterSpeedChooser.addOption("60 percent", 0.60);
+    shooterSpeedChooser.addOption("50 percent", 0.50);
+
+    SmartDashboard.putData("Shooter Speed", shooterSpeedChooser);
   }
 
   /**
@@ -66,6 +87,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LeftRatio", Robot.driveSubsystem.leftEncoder.getPositionConversionFactor());
     SmartDashboard.putBoolean("Limit Switch Value", Robot.shooterFeederSubsystem.proxSensor.get());
     SmartDashboard.putNumber("shooter velocity", Robot.shooterLaunchSubsystem.getLaunchSpeed());
+    shooterSpeed = shooterSpeedChooser.getSelected();
   }
 
   /**

@@ -37,8 +37,8 @@ public class TeleOpIntakeCommand extends Command {
   protected void execute() {
     
     if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0.1 && Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
-    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft));
-    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, -Robot.m_oi.xbox.getTriggerAxis(Hand.kRight));
+    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft)*.7);
+    else if(Robot.m_oi.xbox.getTriggerAxis(Hand.kRight) > 0.1) Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, -Robot.m_oi.xbox.getTriggerAxis(Hand.kRight)*.7);
     else Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput,0);
     SmartDashboard.putNumber("Left Trigger", Robot.m_oi.xbox.getTriggerAxis(Hand.kLeft));
     SmartDashboard.putNumber("Right Trigger", Robot.m_oi.xbox.getTriggerAxis(Hand.kRight));
@@ -47,8 +47,8 @@ public class TeleOpIntakeCommand extends Command {
     else if(Robot.m_oi.flightStick.getRawButton(RobotMap.INTAKE_BELT_BACKWARD_BUTTON)) Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput, -speed);
     else Robot.intakeSubsystem.belt.set(ControlMode.PercentOutput,0);
 
-    // if(Robot.m_oi.xbox.getBumperPressed(Hand.kLeft)) Robot.intakeSubsystem.intakeArm.set(Value.kForward);
-    // else if(Robot.m_oi.xbox.getBumperPressed(Hand.kRight)) Robot.intakeSubsystem.intakeArm.set(Value.kReverse);
+    if(Robot.m_oi.xbox.getBumperPressed(Hand.kLeft)) Robot.intakeSubsystem.intakeArm.set(Value.kForward);
+    else if(Robot.m_oi.xbox.getBumperPressed(Hand.kRight)) Robot.intakeSubsystem.intakeArm.set(Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
