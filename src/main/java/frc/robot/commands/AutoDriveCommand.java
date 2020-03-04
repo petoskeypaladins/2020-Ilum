@@ -13,10 +13,12 @@ import frc.robot.Robot;
 
 public class AutoDriveCommand extends Command {
   Timer timer = new Timer();
+  double goal;
 
-  public AutoDriveCommand() {
+  public AutoDriveCommand(double inches) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    goal = inches;
     requires(Robot.driveSubsystem);
   }
 
@@ -30,7 +32,7 @@ public class AutoDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(0.3, 0);
+    Robot.driveSubsystem.drive.arcadeDrive(goal>0?0.35:-0.35, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +40,8 @@ public class AutoDriveCommand extends Command {
   protected boolean isFinished() {
     // if(timer.get() > 1) return true;
     // else return false;
-    return (-Robot.driveSubsystem.leftEncoder.getPosition() < -16);
+    if(goal > 0) return (Robot.driveSubsystem.leftEncoder.getPosition() > goal);
+    else return Robot.driveSubsystem.leftEncoder.getPosition() < goal;
   }
 
   // Called once after isFinished returns true

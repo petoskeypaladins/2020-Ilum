@@ -19,6 +19,8 @@ import frc.robot.Robot;
  * An example command.  You can replace me with your own command.
  */
 public class DriveCommand extends Command {
+  boolean highGear = true;
+  double speed;
   public DriveCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
@@ -36,8 +38,11 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(-Robot.m_oi.xbox.getY(Hand.kLeft)*.8, Robot.m_oi.xbox.getX(Hand.kRight)*.8);
-       
+    highGear = !Robot.m_oi.flightStick.getRawButton(10);
+    if(highGear) speed = 0.8;
+    else speed = 0.4;
+    Robot.driveSubsystem.drive.arcadeDrive(-Robot.m_oi.xbox.getY(Hand.kLeft)*speed, Robot.m_oi.xbox.getX(Hand.kRight)*speed);
+    SmartDashboard.putBoolean("High Gear", highGear);
   }
 
   // Make this return true when this Command no longer needs to run execute()

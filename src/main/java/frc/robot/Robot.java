@@ -9,12 +9,17 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDriveCommand;
+import frc.robot.commands.AutoDriveTest;
 import frc.robot.commands.AutoGroup;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -40,7 +45,15 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   SendableChooser<Double> shooterSpeedChooser = new SendableChooser<>();
-  public static double shooterSpeed;
+  public static double shooterSpeed =0.85;
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+    NetworkTableEntry tv = table.getEntry("tv");
+    public static double x,y,area,target;
+  
+
   /**
    * Th2is function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -51,6 +64,7 @@ public class Robot extends TimedRobot {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(640, 480);
     m_chooser.setDefaultOption("Default Auto", new AutoGroup());
+    m_chooser.addOption("test vision thing", new AutoDriveTest());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     
@@ -66,7 +80,8 @@ public class Robot extends TimedRobot {
     shooterSpeedChooser.addOption("50 percent", 0.50);
 
     SmartDashboard.putData("Shooter Speed", shooterSpeedChooser);
-  }
+   
+      }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -87,7 +102,24 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LeftRatio", Robot.driveSubsystem.leftEncoder.getPositionConversionFactor());
     SmartDashboard.putBoolean("Limit Switch Value", Robot.shooterFeederSubsystem.proxSensor.get());
     SmartDashboard.putNumber("shooter velocity", Robot.shooterLaunchSubsystem.getLaunchSpeed());
-    shooterSpeed = shooterSpeedChooser.getSelected();
+    // shooterSpeed = shooterSpeedChooser.getSelected();
+    x = tx.getDouble(0.0);
+    y = ty.getDouble(0.0);
+    area = ta.getDouble(0.0);
+    target = tv.getDouble(0.0);
+    SmartDashboard.putNumber("Target", target);
+    SmartDashboard.putNumber("T X", x);
+    SmartDashboard.putNumber("T Y", y);
+    SmartDashboard.putNumber("T Area", area);
+    SmartDashboard.putNumber("Shooter Speed", shooterSpeed);
+    if(Robot.m_oi.flightStick.getRawButton(8)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+    if(Robot.m_oi.flightStick.getRawButton(7)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    SmartDashboard.putString("test", table.getEntry("camMode").getNumber(69.420).toString());
+ 
+    if(Robot.m_oi.xbox.getStickButton(Hand.kLeft)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    if(Robot.m_oi.xbox.getStickButton(Hand.kRight)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    SmartDashboard.putString("test", table.getEntry("ledMode").getNumber(69.420).toString());
+    // SmartDashboard.putNumber("Gyro angle",Robot.driveSubsystem.gyro.getAngle());
   }
 
   /**

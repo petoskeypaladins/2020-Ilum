@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.IntakeOverrideCommand;
+import frc.robot.commands.ShooterSpeedoggle;
 import frc.robot.commands.LauncherSpeedCommand;
 import frc.robot.commands.ShooterLaunchCommand;
 
@@ -25,12 +26,16 @@ public class OI {
   public Button shooterButton = new JoystickButton(flightStick, RobotMap.SHOOTER_LAUNCH_BUTTON);
   public Button launcherButton = new JoystickButton(flightStick, RobotMap.LAUNCHER_START);
   public Button feederOverrideTemp = new JoystickButton(flightStick, 11);
+  public Button shooterSpeedToggle = new JoystickButton(flightStick, 5);
 
   public OI() {
     shooterButton.whenPressed(new ShooterLaunchCommand());
     // launcherButton.whenReleased(new LauncherSpeedCommand());
     feederOverrideTemp.whenPressed(new IntakeOverrideCommand());
     launcherButton.toggleWhenPressed(new LauncherSpeedCommand());
+    shooterSpeedToggle.whenPressed(new ShooterSpeedoggle())
+    
+    ;
   }  
 
 }

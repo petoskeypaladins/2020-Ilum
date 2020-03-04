@@ -7,20 +7,22 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class AutoShootCommand extends Command {
-  public AutoShootCommand() {
+public class AutoIntakeOutCommand extends Command {
+  public AutoIntakeOutCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooterLaunchSubsystem);
+    requires(Robot.intakeSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterLaunchSubsystem.spinCommand(0.95);
+    Robot.intakeSubsystem.intakeArm.set(Value.kForward);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,7 +33,7 @@ public class AutoShootCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timeSinceInitialized() > 5;
+    return true;
   }
 
   // Called once after isFinished returns true

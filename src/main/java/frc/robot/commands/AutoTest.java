@@ -9,23 +9,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoGroup extends CommandGroup {
+public class AutoTest extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoGroup() {
+  public AutoTest() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addSequential(new AutoIntakeOutCommand(), 1);
-    // addParallel(new FillFeederCommand());
-    addParallel(new AutoDriveCommand(16),12);
+    addParallel(new FillFeederCommand());
+    addParallel(new AutoDriveTest());
     addSequential(new AutoShootCommand());
 
-    addSequential(new AutoWaitCommand(), 0.1);
-    addSequential(new AutoFireCommand());
 
+    addSequential(new AutoFireCommand());
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

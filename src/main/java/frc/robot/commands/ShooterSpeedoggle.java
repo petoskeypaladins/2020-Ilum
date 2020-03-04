@@ -10,17 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class AutoShootCommand extends Command {
-  public AutoShootCommand() {
+public class ShooterSpeedoggle extends Command {
+  public ShooterSpeedoggle() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooterLaunchSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterLaunchSubsystem.spinCommand(0.95);
+    if(Robot.shooterSpeed == 0.85) Robot.shooterSpeed = 0.65; else Robot.shooterSpeed =0.85;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,7 +30,7 @@ public class AutoShootCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timeSinceInitialized() > 5;
+    return true;
   }
 
   // Called once after isFinished returns true

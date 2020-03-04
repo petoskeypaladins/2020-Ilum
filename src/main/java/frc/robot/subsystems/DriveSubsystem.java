@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -33,6 +34,7 @@ public class DriveSubsystem extends Subsystem {
   public SpeedControllerGroup left = new SpeedControllerGroup(leftMotor1, leftMotor2);
   SpeedControllerGroup right = new SpeedControllerGroup(rightMotor1, rightMotor2);  
   public DifferentialDrive drive = new DifferentialDrive(left, right);
+  // public ADIS16448_IMU gyro = new ADIS16448_IMU();
   
   @Override
   protected void initDefaultCommand() {
