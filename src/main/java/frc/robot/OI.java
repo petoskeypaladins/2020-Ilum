@@ -25,13 +25,13 @@ public class OI {
   public Joystick flightStick = new Joystick(1);  
   public Button shooterButton = new JoystickButton(flightStick, RobotMap.SHOOTER_LAUNCH_BUTTON);
   public Button launcherButton = new JoystickButton(flightStick, RobotMap.LAUNCHER_START);
-  public Button feederOverrideTemp = new JoystickButton(flightStick, 11);
-  public Button shooterSpeedToggle = new JoystickButton(flightStick, 5);
+  // public Button feederOverrideTemp = new JoystickButton(flightStick, RobotMap.FEEDER_OVERRIDE);
+  public Button shooterSpeedToggle = new JoystickButton(flightStick, RobotMap.SHOOTER_SPEED_TOGGLE);
 
   public OI() {
     shooterButton.whenPressed(new ShooterLaunchCommand());
     // launcherButton.whenReleased(new LauncherSpeedCommand());
-    feederOverrideTemp.whenPressed(new IntakeOverrideCommand());
+    // feederOverrideTemp.whenPressed(new IntakeOverrideCommand());
     launcherButton.toggleWhenPressed(new LauncherSpeedCommand());
     shooterSpeedToggle.whenPressed(new ShooterSpeedoggle())
     

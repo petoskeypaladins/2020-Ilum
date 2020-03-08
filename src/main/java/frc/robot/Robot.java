@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDriveCommand;
 import frc.robot.commands.AutoDriveTest;
 import frc.robot.commands.AutoGroup;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -40,12 +41,13 @@ public class Robot extends TimedRobot {
   public static ShooterFeederSubsystem shooterFeederSubsystem = new ShooterFeederSubsystem();
   public static ShooterLaunchSubsystem shooterLaunchSubsystem = new ShooterLaunchSubsystem();
   public static ColorWheelSubsystem wheelSubsystem = new ColorWheelSubsystem();
+  public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();  
   public static OI m_oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   SendableChooser<Double> shooterSpeedChooser = new SendableChooser<>();
-  public static double shooterSpeed =0.85;
+  public static double shooterSpeed =0.65;
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
@@ -62,7 +64,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(640, 480);
+    camera.setResolution(320, 240);
     m_chooser.setDefaultOption("Default Auto", new AutoGroup());
     m_chooser.addOption("test vision thing", new AutoDriveTest());
     // chooser.addOption("My Auto", new MyAutoCommand());

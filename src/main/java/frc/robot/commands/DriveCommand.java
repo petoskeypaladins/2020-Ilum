@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -38,7 +39,7 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    highGear = !Robot.m_oi.flightStick.getRawButton(10);
+    highGear = !Robot.m_oi.flightStick.getRawButton(RobotMap.HIGH_GEAR);
     if(highGear) speed = 0.8;
     else speed = 0.4;
     Robot.driveSubsystem.drive.arcadeDrive(-Robot.m_oi.xbox.getY(Hand.kLeft)*speed, Robot.m_oi.xbox.getX(Hand.kRight)*speed);

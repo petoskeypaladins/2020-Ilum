@@ -30,10 +30,31 @@ public class RobotMap {
   public static final int INTAKE_WHEEL_MOTOR = 10;
   public static final int INTAKE_BELT_MOTOR = 11;
   
+  public static final int WINCH_MOTOR_1 = 14;
+  public static final int WINCH_MOTOR_2 = 15;
+
+
+  // these are flightstick buttons
   public static final int SHOOTER_LAUNCH_BUTTON = 1;
+  public static final int LAUNCHER_START = 2;
   public static final int INTAKE_BELT_FORWARD_BUTTON = 3;
   public static final int INTAKE_BELT_BACKWARD_BUTTON = 4;
-  public static final int LAUNCHER_START = 2;
+  public static final int SHOOTER_SPEED_TOGGLE = 5;
+  public static final int HIGH_GEAR = 10;
+  // public static final int FEEDER_OVERRIDE = 11;
+
+  
+  public static final int ROTATE_UP = 4;
+  public static final int ROTATE_DOWN = 5;
+  public static final int EXTEND_WINCH = 6;
+  public static final int RETRACT_WINCH = 7;
+
+  // 9 & 12 are BAD
+  // public static final int SPIN POV;
+
+
+
+
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
