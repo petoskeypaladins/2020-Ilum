@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     NetworkTableEntry ta = table.getEntry("ta");
     NetworkTableEntry tv = table.getEntry("tv");
     public static double x,y,area,target;
+    boolean hackyWorkaround = true;
   
 
   /**
@@ -126,8 +127,10 @@ public class Robot extends TimedRobot {
     if(Robot.m_oi.flightStick.getRawButton(7)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
     SmartDashboard.putString("test", table.getEntry("camMode").getNumber(69.420).toString());
  
-    if(Robot.m_oi.xbox.getStickButton(Hand.kLeft)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-    if(Robot.m_oi.xbox.getStickButton(Hand.kRight)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    if(Robot.m_oi.xbox.getStartButton()) hackyWorkaround = true;
+    if(Robot.m_oi.xbox.getStickButton(Hand.kRight)) hackyWorkaround = false;
+    if(hackyWorkaround) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    else NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3); 
     SmartDashboard.putString("test", table.getEntry("ledMode").getNumber(69.420).toString());
     SmartDashboard.putNumber("Gyro angle",Robot.driveSubsystem.gyro.getAngle());
     SmartDashboard.putString("Color needed", DriverStation.getInstance().getGameSpecificMessage());
