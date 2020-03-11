@@ -35,7 +35,7 @@ public class ClimbCommand extends Command {
     if (Robot.m_oi.xbox.getPOV() == 180) Robot.climbSubsystem.RetractSolenoid();
     if (Robot.m_oi.xbox.getBackButton() && Robot.m_oi.xbox.getStartButton() && Robot.m_oi.flightStick.getPOV() == 180)
       Robot.climbSubsystem.WindWinch(-0.2);
-    else if (Robot.m_oi.flightStick.getPOV() == 0 && Robot.climbSubsystem.ClimbUp.get() == Value.kReverse) {
+    else if (Robot.m_oi.flightStick.getRawButtonPressed(RobotMap.EXTEND_WINCH) && Robot.climbSubsystem.ClimbUp.get() == Value.kReverse) {
       Robot.climbSubsystem.WindWinch(0.5);
       Robot.climbSubsystem.RotateSolenoidDownwards();
     }

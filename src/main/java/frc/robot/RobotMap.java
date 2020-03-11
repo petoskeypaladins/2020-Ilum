@@ -44,11 +44,8 @@ public class RobotMap {
   // public static final int FEEDER_OVERRIDE = 11;
 
   
-  public static final int ROTATE_UP = 4;
-  public static final int ROTATE_DOWN = 5;
   public static final int EXTEND_WINCH = 6;
-  public static final int RETRACT_WINCH = 7;
-
+ 
   // 9 & 12 are BAD
   // public static final int SPIN POV;
 

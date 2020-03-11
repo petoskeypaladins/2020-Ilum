@@ -20,12 +20,17 @@ public class AutoGroup extends CommandGroup {
     // these will run in order.
     addSequential(new AutoIntakeOutCommand(), 1);
     // addParallel(new FillFeederCommand());
-    addParallel(new AutoDriveCommand(16),12);
-    addSequential(new AutoShootCommand());
+    addParallel(new AutoDriveCommand(16, 0.35),12);
+    addSequential(new AutoShootCommand(0.95));
 
     addSequential(new AutoWaitCommand(), 0.1);
     addSequential(new AutoFireCommand());
-
+    //if (RadioButton.TrenchPickup = pressed) {
+    // Run the "trench pickup" code
+    //}
+    //if (RadioButton.ShieldGeneratorPickup = pressed) {
+    // Run the "Shield Generator Pickup" code
+    //}
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

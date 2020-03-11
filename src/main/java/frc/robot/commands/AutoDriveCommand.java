@@ -14,11 +14,12 @@ import frc.robot.Robot;
 public class AutoDriveCommand extends Command {
   Timer timer = new Timer();
   double goal;
-
-  public AutoDriveCommand(double inches) {
+  double MovingSpeed;
+  public AutoDriveCommand(double inches, double speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     goal = inches;
+    MovingSpeed = speed;
     requires(Robot.driveSubsystem);
   }
 
@@ -32,7 +33,7 @@ public class AutoDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.drive.arcadeDrive(goal>0?0.35:-0.35, 0);
+    Robot.driveSubsystem.drive.arcadeDrive(goal>0?MovingSpeed:-MovingSpeed, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -48,6 +49,8 @@ public class AutoDriveCommand extends Command {
   @Override
   protected void end() {
     Robot.driveSubsystem.drive.arcadeDrive(0, 0);
+    Robot.driveSubsystem.leftEncoder.setPosition(0);
+    Robot.driveSubsystem.rightEncoder.setPosition(0);
 
   }
 

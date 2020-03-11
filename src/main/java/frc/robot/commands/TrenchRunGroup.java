@@ -9,21 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoTest extends CommandGroup {
+public class TrenchRunGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoTest() {
+  static public double DRIVE_TO_TRENCH = 70;
+  static public double TURN_TO_FACE_CELLS = 15;
+  static public double DRIVE_THROUGH_TRENCH = 80;
+  public TrenchRunGroup() {
+    addSequential(new AutoGroup()); //runs the standard Auto procedure
+    addSequential(new AutoCollectCommand(-0.7)); //turns on the intake wheels
+    addSequential(new AutoDriveCommand(DRIVE_TO_TRENCH, 0.65)); //drives to the trench as the intake goes out
+    addSequential(new AutoTurnCommand(TURN_TO_FACE_CELLS)); //turns to face the row of cells
+    addSequential(new AutoDriveCommand(DRIVE_THROUGH_TRENCH, 0.45)); //drives through and collects all three cells
+    // addSequential(new FillFeederCommand(true));
+    addSequential(new AutoCollectCommand(0)); //turns off the intake wheels
+    addSequential(new AutoDriveCommand(-DRIVE_THROUGH_TRENCH - 20, 0.65)); //drives back to the shooting location
+    addSequential(new AutoTurnCommand(-TURN_TO_FACE_CELLS));
+    // addSequential(new AutoDriveCommand(-DRIVE_TO_TRENCH, 0.3));
+    addSequential(new AutoShootCommand(0.75));
+
+    addSequential(new AutoWaitCommand(), .1);
+    addSequential(new AutoFireCommand());
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addParallel(new FillFeederCommand(false));
-    addParallel(new AutoDriveTest());
-    addSequential(new AutoShootCommand(0.95));
 
-
-    addSequential(new AutoFireCommand());
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

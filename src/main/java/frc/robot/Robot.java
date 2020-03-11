@@ -12,15 +12,18 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AutoDriveCommand;
 import frc.robot.commands.AutoDriveTest;
 import frc.robot.commands.AutoGroup;
+import frc.robot.commands.ShieldGeneratorGroup;
+import frc.robot.commands.TestCommandGroup;
+import frc.robot.commands.TrenchRunGroup;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -66,8 +69,11 @@ public class Robot extends TimedRobot {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(320, 240);
     m_chooser.setDefaultOption("Default Auto", new AutoGroup());
-    m_chooser.addOption("test vision thing", new AutoDriveTest());
+    m_chooser.addOption("test turn thing", new TestCommandGroup());
+    m_chooser.addOption("Trench Run", new TrenchRunGroup());
+    m_chooser.addOption("Shield Generator run", new ShieldGeneratorGroup());
     // chooser.addOption("My Auto", new MyAutoCommand());
+  
     SmartDashboard.putData("Auto mode", m_chooser);
     
     shooterSpeedChooser.addOption("Full", 1.);
@@ -82,7 +88,8 @@ public class Robot extends TimedRobot {
     shooterSpeedChooser.addOption("50 percent", 0.50);
 
     SmartDashboard.putData("Shooter Speed", shooterSpeedChooser);
-   
+    Robot.driveSubsystem.gyro.calibrate();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
       }
 
   /**
@@ -100,6 +107,7 @@ public class Robot extends TimedRobot {
     if(Robot.m_oi.xbox.getStartButtonPressed()) {
       Robot.driveSubsystem.leftEncoder.setPosition(0);
       Robot.driveSubsystem.rightEncoder.setPosition(0);
+      Robot.driveSubsystem.gyro.calibrate();
     }
     SmartDashboard.putNumber("LeftRatio", Robot.driveSubsystem.leftEncoder.getPositionConversionFactor());
     SmartDashboard.putBoolean("Limit Switch Value", Robot.shooterFeederSubsystem.proxSensor.get());
@@ -121,7 +129,8 @@ public class Robot extends TimedRobot {
     if(Robot.m_oi.xbox.getStickButton(Hand.kLeft)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     if(Robot.m_oi.xbox.getStickButton(Hand.kRight)) NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     SmartDashboard.putString("test", table.getEntry("ledMode").getNumber(69.420).toString());
-    // SmartDashboard.putNumber("Gyro angle",Robot.driveSubsystem.gyro.getAngle());
+    SmartDashboard.putNumber("Gyro angle",Robot.driveSubsystem.gyro.getAngle());
+    SmartDashboard.putString("Color needed", DriverStation.getInstance().getGameSpecificMessage());
   }
 
   /**

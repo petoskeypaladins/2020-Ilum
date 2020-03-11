@@ -7,33 +7,36 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class AutoShootCommand extends Command {
-  public double ShooterSpeed;
-  public AutoShootCommand(double speed) {
+public class AutoCollectCommand extends Command {
+public double WheelSpeed;
+
+  public AutoCollectCommand(double speed) {
+    requires(Robot.intakeSubsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooterLaunchSubsystem);
-    ShooterSpeed = speed;
+    WheelSpeed = speed;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterLaunchSubsystem.spinCommand(ShooterSpeed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.intakeSubsystem.wheels.set(ControlMode.PercentOutput, WheelSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timeSinceInitialized() > 1.25;
+    return true;
   }
 
   // Called once after isFinished returns true

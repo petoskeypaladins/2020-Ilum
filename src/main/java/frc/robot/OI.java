@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.IntakeOverrideCommand;
 import frc.robot.commands.ShooterSpeedoggle;
 import frc.robot.commands.LauncherSpeedCommand;
 import frc.robot.commands.ShooterLaunchCommand;
